@@ -16,7 +16,7 @@
 	</header><!-- .entry-header -->
 
     <div class='geek-tip-category'>
-        General - Trash
+        <?=tipCategory::get_human_readable_by_post_id( $post->ID );?>
     </div>
 
 </article><!-- #post-<?php the_ID(); ?> -->
