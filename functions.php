@@ -121,9 +121,7 @@ add_action( 'widgets_init', 'garbage_geek_widgets_init' );
  */
 function garbage_geek_scripts() {
 	wp_enqueue_style( 'garbage-geek-style', get_stylesheet_uri() );
-
 	wp_enqueue_script( 'garbage-geek-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
-
 	wp_enqueue_script( 'garbage-geek-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 	if(is_front_page()){
 

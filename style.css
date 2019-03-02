@@ -983,3 +983,20 @@ object {
 .gallery-caption {
 	display: block;
 }
+/* My Styles */
+body{
+
+}
+body #site-navigation{
+	display: none
+}
+body #page{
+
+}
+body #page #masthead{
+	position: absolute;
+	width: 100%;
+	height: 5em;
+	color: #FFFFFF;
+	border: solid .2em black;
+}

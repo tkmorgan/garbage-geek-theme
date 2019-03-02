@@ -21,38 +21,26 @@
 </head>
 
 <body <?php body_class(); ?>>
+<nav id="site-navigation" class="main-navigation">
+	<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'garbage-geek' ); ?></button>
+	<?php
+	wp_nav_menu( array(
+		'theme_location' => 'menu-1',
+		'menu_id'        => 'primary-menu',
+	) );
+	?>
+</nav><!-- #site-navigation -->
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'garbage-geek' ); ?></a>
-
 	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$garbage_geek_description = get_bloginfo( 'description', 'display' );
-			if ( $garbage_geek_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $garbage_geek_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
-
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'garbage-geek' ); ?></button>
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
-			) );
-			?>
-		</nav><!-- #site-navigation -->
+			<a class='logo'href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php the_custom_logo(); ?></a>
+			<div class='menu'></div>
 	</header><!-- #masthead -->
-
+	<?php
+		// if ( is_front_page() ) :
+		// 	?>
+		 	<!-- <h1 class="site-title"><?php //bloginfo( 'name' ); ?></h1> -->
+	 	<?php
+		// endif;
+	?>
 	<div id="content" class="site-content">
