@@ -29,6 +29,7 @@ query_posts( $query_obj );
 		<!-- Categories dropdown -->
 		<form action='.' id='tip-category-form'>
 			<select id='tip_category_dropdown' name='tip-category'>
+				<option value=''>Categories</option>
 				<?php foreach( tipCategory::$categories as $machine_name => $human_name ):?>
 					<option 
 						value='<?=$machine_name?>' 
