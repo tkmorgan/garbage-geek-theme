@@ -33,8 +33,13 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'garbage-geek' ); ?></a>
 	<header id="masthead" class="site-header">
-			<a class='logo'href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php the_custom_logo(); ?></a>
-			<div class='menu'></div>
+		<a class='logo'href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php the_custom_logo(); ?></a>
+		<div class='menu'></div>
+		<style>
+			body #page #masthead .menu{
+				background:url(<?php echo get_template_directory_uri().'/'; ?>); 
+			}
+		</style>
 	</header><!-- #masthead -->
 	<?php
 		// if ( is_front_page() ) :

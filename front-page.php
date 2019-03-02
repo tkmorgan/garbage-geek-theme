@@ -7,6 +7,7 @@
  */
 
 get_header();
+query_posts( array( 'post_type' => 'geek_tip' ) );
 ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
