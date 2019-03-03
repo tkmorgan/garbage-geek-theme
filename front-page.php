@@ -336,7 +336,8 @@ echo "</pre>";
 				<span style="color: #93C840;"><?php echo $recycleTot; ?></span><!-- PHP code here -->
 			</div>
 		</div>
-		<canvas id="pi-chart"></canvas>
+		<h2 style="display:block; text-align: center;margin-top:34vw;">Where your garbage is going (In Tons)</h2>
+		<canvas id="pi-chart" style="margin-top: 6vw;"></canvas>
 		<script>
 			var ctx = document.getElementById('pi-chart').getContext('2d');
 			var chart = new Chart(ctx, {
@@ -344,16 +345,14 @@ echo "</pre>";
 				type: 'pie',
 				// The data for our dataset
 				data: {
-					labels: ["Comodity Recycled", "SWMF Recycled", "Mulch Recycled"/*green*/, "C&D (class3) Diverted"/*yelllow*/, "Garbage (Class 1)"/*red*/],
+					labels: ["Comodity Recycled", "SWMF Recycled", "Mulch Recycled", "C&D (class3) Diverted", "Garbage (Class 1)"],
 					datasets: [{
-						label: "Where your Garbage is going",
-						backgroundColor: ['green', 'green', 'green', 'yellow', 'red'],
-						data: [3, 10, 5, 6, 7]
-					}]
+						label: 'Where your garbage is going (In Tons)',
+						backgroundColor: ['#93C840', '#93C840', '#93C840', '#ffdb58', '#800020'],
+						data: [<?php echo $total_wastestream['breakdown']['commodity-recycled']['total']; ?>, <?php echo $total_wastestream['breakdown']['swmf-recycled']['total']; ?>,  <?php echo $total_wastestream['breakdown']['mulch-recycled']['total']; ?>, <?php echo $total_wastestream['breakdown']['diverted']['total']; ?>, <?php echo $total_wastestream['breakdown']['garbage']['total']; ?>]
+					}],
 				},
-
-				// Configuration options go here
-				options: {}
+				options:{cutoutPercentage:'50'}
 			});
 		</script>
 		<style>
