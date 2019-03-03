@@ -35,7 +35,7 @@ function get_total_landfill_recycling( $commodity_recycling_centers, $recyclable
 	$rv = 0;
 	foreach( $commodity_recycling_centers['centers'] as $center ) {
 		$idx = find_element_idx_by_slug($center['fields'], $recyclable_type);
-			
+		
 		$rv+= (int)$center['fields'][$idx]['value'];
 	}
 
@@ -186,8 +186,8 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			$tmpCenter['fields'] = [];
 			$tmpCenter['id'] = $post->ID;
 			$tmpCenter['title'] = $post->post_title;
-			$tmpCenter['landfill-type'] = $landfillType;
 			$landfillType = get_post_meta( $post->ID, 'landfill-type', true );
+			$tmpCenter['landfill-type'] = $landfillType;
 			// pretend you didn't see this
 			foreach( landfillClasses::$waste_types as $slug => $name ) {
 				// print_r( get_post_meta( $post->id, '', true ) );
@@ -208,10 +208,55 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 
 		$landfills['grand-total'] = 0;
 		foreach( landfillClasses::$waste_types as $slug => $name ) {
-			$landfills["total-landfill-${slug}"] = get_total_landfill_recycling($landfills, $slug);
+			$landfills["total-landfill-${slug}"] += get_total_landfill_recycling($landfills, $slug);
 			$landfills['grand-total'] += $landfills["total-landfill-${slug}"];
 		}
 
+
+
+
+
+
+
+
+		
+		query_posts( array( 'post_type' => 'swmf', 'posts_per_page' => -1 ) ); 
+		$swmfs = [];
+		$swmfs['centers'] = [];
+		while ( have_posts() ) :
+			the_post();
+			global $post;
+			
+			$tmpCenter = [];
+			$tmpCenter['fields'] = [];
+			$tmpCenter['id'] = $post->ID;
+			$tmpCenter['title'] = $post->post_title;
+			$smwfType = get_post_meta( $post->ID, 'landfill-type', true );
+			$tmpCenter['smwf-type'] = $smwfType;
+
+			// pretend you didn't see this
+			foreach( swmfs::$waste_types as $slug => $name ) {
+				// print_r( get_post_meta( $post->id, '', true ) );
+
+				// print_r( $post );
+
+				$tmpFields = [];
+				$tmpFields['slug'] = $slug;
+				$tmpFields['value'] = get_post_meta( $post->ID, $slug, true );
+				$tmpFields['name'] = $name;
+				$tmpCenter['fields'][] = $tmpFields;
+			}
+
+
+			$tmpCenter['total-tons'] = array_reduce( $tmpCenter['fields'], 'total_weight_iterator' );
+			$swmfs['centers'][$smwfType] = $tmpCenter;
+		endwhile; // End of the loop.
+
+		$swmfs['grand-total'] = 0;
+		foreach( swmfs::$waste_types as $slug => $name ) {
+			$swmfs["total-smwf-${slug}"] += get_total_landfill_recycling($swmfs, $slug);
+			$swmfs['grand-total'] += $swmfs["total-smwf-${slug}"];
+		}
 
 
 
@@ -248,6 +293,11 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		print_r( $landfills );
 		echo "</pre>";
 		
+		echo "<pre>swmfs
+========================================";
+		print_r( $swmfs );
+		echo "</pre>";
+
 		echo "<pre>Mulch
 ========================================";
 		print_r( $mulch );
