@@ -275,10 +275,10 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		$total_wastestream = [];
 
 		$cr = $commodity_recycling_centers['grand-total-in-tons'];
-		$swmfr = $swmfs['recycled']['total-tons'];
+		$swmfr = $swmfs['centers']['recycled']['total-tons'];
 		$mr = $mulch['total'];
-		$diverted = $landfills['diverted']['total-tons'] + $swmfs['diverted']['total-tons'];
-		$garbage = $landfills['garbage']['total-tons'];
+		$diverted = $landfills['centers']['diverted']['total-tons'] + $swmfs['centers']['diverted']['total-tons'];
+		$garbage = $landfills['centers']['garbage']['total-tons'];
 		$total_waste = $cr + $swmfr + $mr + $diverted + $garbage;
 
 		function asPercent( $numerator, $denominator ) {
