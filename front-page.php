@@ -137,6 +137,18 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			$commodity_recycling_centers['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
 		}
 
+		// group commodity recycling centers by type
+		$commodity_recycling_centers['data-grouped-by-type'] = [];
+		foreach( $commodity_recycling_centers['centers'] as $center ) {
+			$center_type = $center['center-type'];
+			if( !isset( $commodity_recycling_centers['data-grouped-by-type'][$center_type] ) ) {
+				$commodity_recycling_centers['data-grouped-by-type'][$center_type] = [];
+			}
+			$commodity_recycling_centers['data-grouped-by-type'][$center_type][] = $center;
+		}
+
+		unset($commodity_recycling_centers['centers']);
+
 		echo "<pre>";
 		print_r( $commodity_recycling_centers );
 		echo "</pre>";
