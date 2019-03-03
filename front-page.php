@@ -336,6 +336,26 @@ echo "</pre>";
 				<span style="color: #93C840;"><?php echo $recycleTot; ?></span><!-- PHP code here -->
 			</div>
 		</div>
+		<canvas id="pi-chart"></canvas>
+		<script>
+			var ctx = document.getElementById('pi-chart').getContext('2d');
+			var chart = new Chart(ctx, {
+				// The type of chart we want to create
+				type: 'pie',
+				// The data for our dataset
+				data: {
+					labels: ["Comodity Recycled", "SWMF Recycled", "Mulch Recycled"/*green*/, "C&D (class3) Diverted"/*yelllow*/, "Garbage (Class 1)"/*red*/],
+					datasets: [{
+						label: "Where your Garbage is going",
+						backgroundColor: ['green', 'green', 'green', 'yellow', 'red'],
+						data: [3, 10, 5, 6, 7]
+					}]
+				},
+
+				// Configuration options go here
+				options: {}
+			});
+		</script>
 		<style>
 			#main .progress-bar .red {
 				display: inline-block;
