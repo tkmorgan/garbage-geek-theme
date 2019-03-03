@@ -128,9 +128,13 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			// endif;
 		endwhile; // End of the loop.
 
+		$commodity_recycling_centers['grand-total-in-pounds'] = 0;
+		$commodity_recycling_centers['grand-total-in-pounds'] = 0;
 		foreach( recyclingCenterTotals::$recyclable_types as $slug => $name ) {
 			$commodity_recycling_centers["drop-off-total-${slug}"] = get_drop_off_center_total($commodity_recycling_centers, $slug);
 			$commodity_recycling_centers["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($commodity_recycling_centers, $slug);
+			$commodity_recycling_centers['grand-total-in-pounds'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
+			$commodity_recycling_centers['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
 		}
 
 		echo "<pre>";
