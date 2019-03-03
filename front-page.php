@@ -31,6 +31,16 @@ function get_drop_off_center_total( $commodity_recycling_centers, $recyclable_ty
 	return $rv;
 }
 
+function get_total_landfill_recycling( $commodity_recycling_centers, $recyclable_type ) {
+	$rv = 0;
+	foreach( $commodity_recycling_centers['centers'] as $center ) {
+		$idx = find_element_idx_by_slug($center['fields'], $recyclable_type);
+			
+		$rv+= (int)$center['fields'][$idx]['value'];
+	}
+
+	return (float)$rv;
+}
 
 function get_total_commodity_recycling( $commodity_recycling_centers, $recyclable_type ) {
 	$rv = 0;
@@ -196,10 +206,10 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			$landfills['centers'][$landfillType] = $tmpCenter;
 		endwhile; // End of the loop.
 
-		$landfills['grand-total-in-tons'] = 0;
+		$landfills['grand-total'] = 0;
 		foreach( landfillClasses::$waste_types as $slug => $name ) {
-			$landfills["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($landfills, $slug);
-			$landfills['grand-total-in-tons'] += $landfills["total-commodity-recycling-${slug}"] * 2000;
+			$landfills["total-landfill-${slug}"] = get_total_landfill_recycling($landfills, $slug);
+			$landfills['grand-total'] += $landfills["total-landfill-${slug}"];
 		}
 
 
