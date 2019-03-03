@@ -128,6 +128,9 @@ function garbage_geek_scripts() {
 	if(is_front_page()){
 		wp_enqueue_style('font-page-styles', get_template_directory_uri().'/css/front-page.css', null, '0.0');
 	};
+	if(is_page_template('page-subscribe.php')){
+		wp_enqueue_style('subscribe-page-styles', get_template_directory_uri().'/css/subscribe-page.css', null, '0.0');
+	}
 }
 add_action( 'wp_enqueue_scripts', 'garbage_geek_scripts' );
 /**

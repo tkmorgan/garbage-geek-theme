@@ -1,0 +1,28 @@
+body #main{
+    margin-top: 12vw;
+}
+body .subscriber-signup-form form{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 80vw;
+    height: 40vw;
+    margin: auto;
+    margin-top: 20vw;
+}
+body .subscriber-signup-form form #subscriber-email{
+    width: 80vw;
+}
+body .subscriber-signup-form form #subscribe-button{
+    display: block;
+    background: #2D303E;
+    width: 80vw;
+    font-size: 4vw;
+    margin:auto;
+    margin-bottom: 4vw;
+    text-decoration: none;
+    color: #93C840;
+    border: .05em solid #2D303E;
+    border-radius: .45em;
+}
