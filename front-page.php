@@ -8,7 +8,7 @@
 
 get_header();
 
-function total_pound_iterator($carry, $item) {
+function total_weight_iterator($carry, $item) {
 	if( !$carry ) return (int)$item['value'];
 	return $carry + (int)$item['value'];
 }
@@ -142,7 +142,7 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			}
 
 
-			$tmpCenter['total-pounds'] = array_reduce( $tmpCenter['fields'], 'total_pound_iterator' );
+			$tmpCenter['total-pounds'] = array_reduce( $tmpCenter['fields'], 'total_weight_iterator' );
 			$tmpCenter['total-tons'] = (float)$tmpCenter['total-pounds'] / 2000;
 			$commodity_recycling_centers['centers'][] = $tmpCenter;
 			// the_post_navigation();
@@ -153,13 +153,69 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		endwhile; // End of the loop.
 
 		$commodity_recycling_centers['grand-total-in-pounds'] = 0;
-		$commodity_recycling_centers['grand-total-in-pounds'] = 0;
+		$commodity_recycling_centers['grand-total-in-tons'] = 0;
 		foreach( recyclingCenterTotals::$recyclable_types as $slug => $name ) {
 			$commodity_recycling_centers["drop-off-total-${slug}"] = get_drop_off_center_total($commodity_recycling_centers, $slug);
 			$commodity_recycling_centers["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($commodity_recycling_centers, $slug);
 			$commodity_recycling_centers['grand-total-in-pounds'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
 			$commodity_recycling_centers['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
 		}
+
+
+
+
+
+		query_posts( array( 'post_type' => 'landfill_classes', 'posts_per_page' => -1 ) ); 
+		$landfills = [];
+		$landfills['centers'] = [];
+		while ( have_posts() ) :
+			the_post();
+			global $post;
+			
+			$tmpCenter = [];
+			$tmpCenter['fields'] = [];
+			$tmpCenter['id'] = $post->ID;
+			$tmpCenter['title'] = $post->post_title;
+			$tmpCenter['landfill-type'] = $landfillType;
+			$landfillType = get_post_meta( $post->ID, 'landfill-type', true );
+			// pretend you didn't see this
+			foreach( landfillClasses::$waste_types as $slug => $name ) {
+				// print_r( get_post_meta( $post->id, '', true ) );
+
+				// print_r( $post );
+
+				$tmpFields = [];
+				$tmpFields['slug'] = $slug;
+				$tmpFields['value'] = get_post_meta( $post->ID, $slug, true );
+				$tmpFields['name'] = $name;
+				$tmpCenter['fields'][] = $tmpFields;
+			}
+
+
+			$tmpCenter['total-tons'] = array_reduce( $tmpCenter['fields'], 'total_weight_iterator' );
+			$landfills['centers'][$landfillType] = $tmpCenter;
+		endwhile; // End of the loop.
+
+		$landfills['grand-total-in-tons'] = 0;
+		foreach( landfillClasses::$waste_types as $slug => $name ) {
+			$landfills["drop-off-total-${slug}"] = get_drop_off_center_total($commodity_recycling_centers, $slug);
+			$landfills["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($commodity_recycling_centers, $slug);
+			$landfills['grand-total-in-pounds'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
+			$landfills['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		// group commodity recycling centers by type
 		$commodity_recycling_centers['data-grouped-by-type'] = [];
@@ -179,6 +235,10 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		echo "</pre>";
 
 
+		echo "<pre>Landfills
+========================================";
+		print_r( $landfills );
+		echo "</pre>";
 		
 		echo "<pre>Mulch
 ========================================";
