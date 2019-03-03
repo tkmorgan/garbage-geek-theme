@@ -59,7 +59,7 @@ query_posts( $query_obj );
 		else:
 		?>
 			<p>No tips today...</p>
-		<?
+		<?php
 		endif;
 		?>
 
