@@ -61,7 +61,7 @@ error
 		else:
 		?>
 			<p>No tips today...</p>
-		<?
+		<?php
 		endif;
 		?>
 
