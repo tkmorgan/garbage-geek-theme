@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * Template Name: Tips Page
+ * Template Name: Subscribe Page
  *
  * @package garbage-geek
  */
@@ -32,7 +32,7 @@ query_posts( $query_obj );
         </div>
 
         <div class='subscriber-signup-result' id='subscriber-signup-loading'>
-            <image src="<?=get_template_directory_uri()?>/images/Loading_2.gif">
+            <img src="<?=get_template_directory_uri()?>/images/Loading_2.gif" >
         </div>
 
         <div class='subscriber-signup-result' id='subscriber-signup-success'>
