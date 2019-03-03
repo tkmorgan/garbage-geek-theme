@@ -92,6 +92,30 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			</div>
 		</div>
 		<?php
+
+		query_posts( array( 'post_type' => 'mulch', 'posts_per_page' => -1 ) );
+		if( have_posts() ):
+			the_post();
+			global $post;
+
+			$mulch = [];
+			$mulch['fields'] = []; 
+			
+			$tmp = [];
+			$tmp['slug'] = 'leaves';
+			$tmp['value'] = get_post_meta( $post->ID, 'leaves', true );
+			$tmp['name'] = 'Leaves';
+			$mulch['fields'][] = $tmp;			
+			
+			$tmp = [];
+			$tmp['slug'] = 'brush';
+			$tmp['value'] = get_post_meta( $post->ID, 'brush', true );
+			$tmp['name'] = 'Brush';
+			$mulch['fields'][] = $tmp;
+
+			$mulch['total'] = $mulch['fields'][0]['value'] + $mulch['fields'][1]['value'];
+		endif;
+
 		query_posts( array( 'post_type' => 'rc_totals', 'posts_per_page' => -1 ) ); 
 		$commodity_recycling_centers = [];
 		$commodity_recycling_centers['centers'] = [];
@@ -149,8 +173,16 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 
 		unset($commodity_recycling_centers['centers']);
 
-		echo "<pre>";
+		echo "<pre>Commodity Recycline Centers
+========================================";
 		print_r( $commodity_recycling_centers );
+		echo "</pre>";
+
+
+		
+		echo "<pre>Mulch
+========================================";
+		print_r( $mulch );
 		echo "</pre>";
 ?>
 		</main><!-- #main -->
