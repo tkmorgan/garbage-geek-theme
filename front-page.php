@@ -7,7 +7,42 @@
  */
 
 get_header();
-query_posts( array( 'post_type' => 'geek_tip' ) ); ?>
+
+function total_pound_iterator($carry, $item) {
+	if( !$carry ) return (int)$item['value'];
+	return $carry + (int)$item['value'];
+}
+function find_element_idx_by_slug($elements, $slug) {
+	for( $i = 0; $i < count( $elements ); $i++ )
+		if( $elements[$i]['slug'] == $slug )
+			return $i;
+}
+
+function get_drop_off_center_total( $commodity_recycling_centers, $recyclable_type ) {
+	$rv = 0;
+	foreach( $commodity_recycling_centers['centers'] as $center ) {
+		if( $center['center-type'] == 'drop-off-centers' ) {
+			$idx = find_element_idx_by_slug($center['fields'], $recyclable_type);
+			
+			$rv+= (int)$center['fields'][$idx]['value'];
+		}
+	}
+
+	return $rv;
+}
+
+
+function get_total_commodity_recycling( $commodity_recycling_centers, $recyclable_type ) {
+	$rv = 0;
+	foreach( $commodity_recycling_centers['centers'] as $center ) {
+		$idx = find_element_idx_by_slug($center['fields'], $recyclable_type);
+			
+		$rv+= (int)$center['fields'][$idx]['value'];
+	}
+
+	return (float)$rv / 2000;
+}
+?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 		<div class="parallax">
@@ -57,15 +92,51 @@ query_posts( array( 'post_type' => 'geek_tip' ) ); ?>
 			</div>
 		</div>
 		<?php
-		// while ( have_posts() ) :
-			// the_post();
+		query_posts( array( 'post_type' => 'rc_totals', 'posts_per_page' => -1 ) ); 
+		$commodity_recycling_centers = [];
+		$commodity_recycling_centers['centers'] = [];
+		while ( have_posts() ) :
+			the_post();
+			global $post;
+			
+			$tmpCenter = [];
+			$tmpCenter['fields'] = [];
+			$tmpCenter['id'] = $post->ID;
+			$tmpCenter['title'] = $post->post_title;
+			$tmpCenter['center-type'] = get_post_meta( $post->ID, 'center-type', true );
+			// pretend you didn't see this
+			foreach( recyclingCenterTotals::$recyclable_types as $slug => $name ) {
+				// print_r( get_post_meta( $post->id, '', true ) );
+
+				// print_r( $post );
+
+				$tmpFields = [];
+				$tmpFields['slug'] = $slug;
+				$tmpFields['value'] = get_post_meta( $post->ID, $slug, true );
+				$tmpFields['name'] = $name;
+				$tmpCenter['fields'][] = $tmpFields;
+			}
+
+
+			$tmpCenter['total-pounds'] = array_reduce( $tmpCenter['fields'], 'total_pound_iterator' );
+			$tmpCenter['total-tons'] = (float)$tmpCenter['total-pounds'] / 2000;
+			$commodity_recycling_centers['centers'][] = $tmpCenter;
 			// the_post_navigation();
 			// If comments are open or we have at least one comment, load up the comment template.
 			// if ( comments_open() || get_comments_number() ) :
 				// comments_template();
 			// endif;
-		// endwhile; // End of the loop.
-		?>
+		endwhile; // End of the loop.
+
+		foreach( recyclingCenterTotals::$recyclable_types as $slug => $name ) {
+			$commodity_recycling_centers["drop-off-total-${slug}"] = get_drop_off_center_total($commodity_recycling_centers, $slug);
+			$commodity_recycling_centers["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($commodity_recycling_centers, $slug);
+		}
+
+		echo "<pre>";
+		print_r( $commodity_recycling_centers );
+		echo "</pre>";
+?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 <?php
