@@ -25,7 +25,6 @@ query_posts( $query_obj );
 ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-
 		<!-- Categories dropdown -->
 		<form action='.' id='tip-category-form'>
 			<select id='tip_category_dropdown' name='tip-category'>
@@ -40,16 +39,21 @@ query_posts( $query_obj );
 				<?php endforeach;?>
 			</select>
 		</form>
-
+		<style>
+			#main{
+				margin-top: 12vw;
+			}
+			#main form Select{
+				width: 80vw;
+				height: 6vw;
+				margin: auto;
+				margin-top: 17vw;
+			}
+		</style>
 		<?php
 		if( have_posts() ):
 			while ( have_posts() ) :
 				the_post();
-
-				get_template_part( 'template-parts/content', get_post_type() );
-
-				the_post_navigation();
-
 				// If comments are open or we have at least one comment, load up the comment template.
 				if ( comments_open() || get_comments_number() ) :
 					comments_template();
