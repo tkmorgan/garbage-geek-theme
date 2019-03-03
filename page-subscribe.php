@@ -10,7 +10,7 @@ get_header();
 
 $query_obj = array( 
 	'post_type' => 'geek_tip',
-    'posts_per_page' => 1
+    'posts_per_page' => 10
 );
 
 query_posts( $query_obj );
@@ -19,17 +19,29 @@ query_posts( $query_obj );
 		<main id="main" class="site-main">
 
 		<!-- Subscriber Signup -->
-        <div class='subscriber-signup'>
+        <div class='subscriber-signup-form'>
+            Email
+            <form action='.' id='subscriber-signup-form'>
+                <div class='subscriber-email-container'>
+                    <input type="text" id="subscriber-email" />
+                </div>
+                <div class='subscribe-button-container'>
+                    <button id='subscribe-button'>Subscribe</button>
+                </div>
+            </form>
+        </div>
+
+        <div class='subscriber-signup-result' id='subscriber-signup-loading'>
+            <image src="<?=get_template_directory_uri()?>/images/Loading_2.gif">
+        </div>
+
+        <div class='subscriber-signup-result' id='subscriber-signup-success'>
 
         </div>
-		<form action='.' id='subscriber-signup-form'>
-            <div class='subscriber-email-container'>
-                <input type="text" id="subscriber-email" />
-            </div>
-            <div class='subscribe-button-container'>
-                <button id='subscribe-button'>Subscribe</button>
-            </div>
-		</form>
+        <div class='subscriber-signup-result' id='subscriber-signup-error'>
+error
+        </div>
+
 
 		<?php
 		if( have_posts() ):
@@ -55,7 +67,7 @@ query_posts( $query_obj );
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 	document
 		.querySelector('#subscriber-signup-form')
@@ -69,12 +81,30 @@ query_posts( $query_obj );
                     action: 'add_email',
                     email: email
                 };
-                jQuery.post(
-                    'wp-admin/admin-post.php',
+                $('#subscriber-signup-form').hide();
+                $('#subscriber-signup-loading').show();
+                
+                $.post(
+                    '/wp-admin/admin-post.php',
                     post_vars,
                     function(response) {
+                        $('#subscriber-signup-loading').hide();
+                        if( !isNaN(response) ) {
+                            var msg = $('#subscriber-signup-success');
+                            document.querySelector('#subscriber-signup-success').innerHTML = `
+                            <p>Thank you. You have been signed up!</p>
+                            `;
+                            msg.show();
+                        } else {
+                            $('#subscriber-signup-error').show();
+                            document.querySelector('#subscriber-signup-error').innerHTML = `
+                            <p>${response[0].msg[0]}</p>
+                            `;
+                            
+                        }
                         console.log( response );
-                    }
+                    },
+                    'json'
                 );
 			}
 			)
