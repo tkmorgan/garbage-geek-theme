@@ -127,6 +127,8 @@ function garbage_geek_scripts() {
 	wp_enqueue_style('gabage-geek-fonts','https://use.typekit.net/nhm5kxb.css', null, '1.0');
 	if(is_front_page()){
 		wp_enqueue_style('font-page-styles', get_template_directory_uri().'/css/front-page.css', null, '0.0');
+		//Chart Js
+		wp_eqnueue_script('chart-js-scripts', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js', null, '2.7.3');
 	};
 	if(is_page_template('page-subscribe.php')){
 		wp_enqueue_style('subscribe-page-styles', get_template_directory_uri().'/css/subscribe-page.css', null, '0.0');
