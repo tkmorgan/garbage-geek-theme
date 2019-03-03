@@ -266,7 +266,7 @@ $total_wastestream['total'] = [
 	'total' => $total_waste,
 	'percent' => asPercent( $total_waste, $total_waste )
 ];
-
+/*
 echo "<pre>Commodity Recycline Centers
 ========================================";
 print_r( $commodity_recycling_centers );
@@ -293,6 +293,7 @@ echo "<pre>Total Wastestream
 ========================================";
 print_r( $total_wastestream );
 echo "</pre>";
+*/
 ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
