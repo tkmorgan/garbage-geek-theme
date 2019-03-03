@@ -16,36 +16,50 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-
 	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
-<nav id="site-navigation" class="main-navigation">
-	<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'garbage-geek' ); ?></button>
-	<?php
-	wp_nav_menu( array(
-		'theme_location' => 'menu-1',
-		'menu_id'        => 'primary-menu',
-	) );
-	?>
-</nav><!-- #site-navigation -->
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'garbage-geek' ); ?></a>
 	<header id="masthead" class="site-header">
-		<a class='logo'href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php the_custom_logo(); ?></a>
+		<?php the_custom_logo(); ?>
 		<div class='menu'></div>
 		<style>
+			html {
+				margin-top:unset !important;
+			}
 			body #page #masthead .menu{
-				background:url(<?php echo get_template_directory_uri().'/'; ?>); 
+				background:url(<?php echo get_template_directory_uri().'/img/Hamburger_icon_x53x53.png'; ?>);
+				background-size: contain;
+				background-repeat: no-repeat;
+				justify-self: flex-end;
+				height: 100%;
+				width: 8vw;
+				height: 8vw;
+				margin-left: 33vw;
+				margin-right: 2vw;
+			}
+			body #page #masthead .menu:hover{
+				cursor: pointer;
 			}
 		</style>
+		<script>
+			jQuery(document).ready(function($){
+				$('body #page #masthead .menu').click(function(){
+					$('body #page').css('transform', 'translateX(-80vw)');
+					$('body #site-navigation').css('transform', 'translateX(-100vw)');
+				});
+				$('body #site-navigation .close').click(function(){
+					$('body #page').css('transform', 'translateX(0vw)');
+					$('body #site-navigation').css('transform', 'translateX(0vw)');
+				});
+			});
+		</script>
 	</header><!-- #masthead -->
 	<?php
-		// if ( is_front_page() ) :
-		// 	?>
-		 	<!-- <h1 class="site-title"><?php //bloginfo( 'name' ); ?></h1> -->
+		if ( is_front_page() ) : ?>
+			<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 	 	<?php
-		// endif;
+		endif;
 	?>
 	<div id="content" class="site-content">

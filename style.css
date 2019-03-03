@@ -632,99 +632,6 @@ a:focus {
 a:hover, a:active {
 	outline: 0;
 }
-
-/*--------------------------------------------------------------
-## Menus
---------------------------------------------------------------*/
-.main-navigation {
-	clear: both;
-	display: block;
-	float: left;
-	width: 100%;
-}
-
-.main-navigation ul {
-	display: none;
-	list-style: none;
-	margin: 0;
-	padding-left: 0;
-}
-
-.main-navigation ul ul {
-	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-	float: left;
-	position: absolute;
-	top: 100%;
-	left: -999em;
-	z-index: 99999;
-}
-
-.main-navigation ul ul ul {
-	left: -999em;
-	top: 0;
-}
-
-.main-navigation ul ul li:hover > ul,
-.main-navigation ul ul li.focus > ul {
-	left: 100%;
-}
-
-.main-navigation ul ul a {
-	width: 200px;
-}
-
-.main-navigation ul li:hover > ul,
-.main-navigation ul li.focus > ul {
-	left: auto;
-}
-
-.main-navigation li {
-	float: left;
-	position: relative;
-}
-
-.main-navigation a {
-	display: block;
-	text-decoration: none;
-}
-
-/* Small menu. */
-.menu-toggle,
-.main-navigation.toggled ul {
-	display: block;
-}
-
-@media screen and (min-width: 37.5em) {
-	.menu-toggle {
-		display: none;
-	}
-	.main-navigation ul {
-		display: block;
-	}
-}
-
-.site-main .comment-navigation, .site-main
-.posts-navigation, .site-main
-.post-navigation {
-	margin: 0 0 1.5em;
-	overflow: hidden;
-}
-
-.comment-navigation .nav-previous,
-.posts-navigation .nav-previous,
-.post-navigation .nav-previous {
-	float: left;
-	width: 50%;
-}
-
-.comment-navigation .nav-next,
-.posts-navigation .nav-next,
-.post-navigation .nav-next {
-	float: right;
-	text-align: right;
-	width: 50%;
-}
-
 /*--------------------------------------------------------------
 # Accessibility
 --------------------------------------------------------------*/
@@ -985,18 +892,108 @@ object {
 }
 /* My Styles */
 body{
-
-}
-body #site-navigation{
-	display: none
+	width: 200vw;
+	overflow-x: hidden;
 }
 body #page{
-
+	display: inline-block;
+	width: 100vw;
+	float: left;
+	transition: transform 0.2s ease;
 }
 body #page #masthead{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
 	position: absolute;
-	width: 100%;
-	height: 5em;
+	width: 100vw;
+	height: 12vw;
 	color: #FFFFFF;
-	border: solid .2em black;
+	border: solid .05em black;
 }
+body #page #masthead>a{
+	display: block;
+	width: 10vw;
+	height: 10vw;
+	margin-left: 2vw;
+	margin-right: 33vw;
+}
+body #page #masthead>a img{
+	width: 100%;
+}
+body #site-navigation{
+	display: inline-block;
+	float: right;
+	background: #93C840	;
+	height: 100vh;
+	width: 80vw;
+	transition: transform 0.2s ease;
+}
+body .site-title{
+	display: block;
+	background: #2D303E;
+	height: 10vw;
+	color: #F1F2EE;
+	font-family: adobe-hebrew,sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	text-align: center;
+	margin: 0vw;
+	margin-top: 12vw;
+    font-size: 7vw;
+
+}
+body #colophon{
+	height: auto;
+	background: #2D303E;
+	color: #F1F2EE;
+	padding: unset;
+	margin-top: 6vw;
+}
+body #colophon ul{
+	display: flex;
+	flex-flow: column nowrap;
+	list-style: none;
+	padding-left: unset;
+	margin: unset;
+}
+body #colophon ul li{
+	display: block;
+	text-align: center;
+}
+body #colophon ul li:last-child{
+	font-family: Arial, Helvetica, sans-serif , sans-serif;
+}
+body #colophon ul li a{
+	text-decoration: none;
+	font-size: 10vw;
+    line-height: 20vw;
+	color: #F1F2EE;
+}
+body #colophon ul li a:hover{
+	color: #93C840;
+}
+/*Nav*/
+body #site-navigation ul{
+	display: flex;
+	flex-flow: column nowrap;
+	list-style: none;
+	padding-left: unset;
+	margin: unset;
+}
+body #site-navigation ul li{
+	display: block;
+	text-align: center;
+	text-align: left;
+    margin-left: 5vw;
+}
+body #site-navigation ul li a{
+	text-decoration: none;
+	font-size: 10vw;
+    line-height: 20vw;
+	color: #2D303E;
+}
+body #site-navigation ul li a:hover{
+	color: #F1F2EE;
+}	

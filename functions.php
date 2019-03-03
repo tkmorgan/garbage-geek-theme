@@ -45,8 +45,8 @@ if ( ! function_exists( 'garbage_geek_setup' ) ) :
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
 			'menu-1' => esc_html__( 'Primary', 'garbage-geek' ),
+			'menu-2' => esc_html__( 'Footer_Menu', 'garbage-geek' ),
 		) );
-
 		/*
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.
@@ -122,16 +122,14 @@ add_action( 'widgets_init', 'garbage_geek_widgets_init' );
 function garbage_geek_scripts() {
 	wp_enqueue_style( 'garbage-geek-style', get_stylesheet_uri() );
 	wp_enqueue_script( 'garbage-geek-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
-	wp_enqueue_script( 'garbage-geek-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'garbage-geek-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array('jquery'), '20151215', true );
+	//Fonts
+	wp_enqueue_style('gabage-geek-fonts','https://use.typekit.net/nhm5kxb.css', null, '1.0');
 	if(is_front_page()){
-
-	}
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+		wp_enqueue_style('font-page-styles', get_template_directory_uri().'/css/front-page.css', null, '0.0');
+	};
 }
 add_action( 'wp_enqueue_scripts', 'garbage_geek_scripts' );
-
 /**
  * Implement the Custom Header feature.
  */
