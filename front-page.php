@@ -94,7 +94,7 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		<div class="progress-titles">
 			<div style="float: left;">
 				<h3>Land Fill Tons</h3><br/>
-				<span style="color: #800020;">88376</span><!-- PHP code here -->
+				<span style="color: #800020;"><? echo $landfills['grand-totals']; ?></span><!-- PHP code here -->
 			</div>
 			<div style="float: right;">
 				<h3>Recycled Tons</h3><br/>
