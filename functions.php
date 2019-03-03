@@ -130,6 +130,9 @@ function garbage_geek_scripts() {
 	};
 	if(is_page_template('page-subscribe.php')){
 		wp_enqueue_style('subscribe-page-styles', get_template_directory_uri().'/css/subscribe-page.css', null, '0.0');
+		//load Slider 
+		wp_enqueue_style('bx-slider-styles', 'https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css', null, '4.2.12');
+		wp_enqueue_script('bx-slider-scripts', 'https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js', array('jquery'), '4.2.12');
 	}
 }
 add_action( 'wp_enqueue_scripts', 'garbage_geek_scripts' );
