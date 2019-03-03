@@ -32,9 +32,9 @@
     width: 80vw;
     text-align: center;
     margin: auto;
-    margin-top: 12vw;
     font-size: 6vw;
     color: #2D303E;
+    margin-top: 8vw;
 }
 #main .progress-bar{
     background-size: 400vw auto;
@@ -47,8 +47,10 @@
 }
 #main .progress-titles{
     width: 80vw;
+    height: 16vw;
     margin: auto;
     margin-top:6vw;
+    margin-bottom: 12vw;
 }
 #main .progress-titles div{
     display: inline-block;

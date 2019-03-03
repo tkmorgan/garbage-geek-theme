@@ -310,8 +310,6 @@ echo "</pre>";
 				width: 100vw;
 			}
 		</style>
-		<a href="/subscribe"><button>Subscribe to Garbage Tips</button></a>
-		<a href="/tips"><button>See Garbage Tips Now</button></a>
 		<p class='community-text'>
 			See How The Garbage Geek<br>
 			▼ Community is Doing ▼
@@ -336,7 +334,9 @@ echo "</pre>";
 				<span style="color: #93C840;"><?php echo $recycleTot; ?></span><!-- PHP code here -->
 			</div>
 		</div>
-		<h2 style="display:block; text-align: center;margin-top:34vw;">Where your garbage is going (In Tons)</h2>
+		<a href="/subscribe"><button>Subscribe to Garbage Tips</button></a>
+		<a href="/tips"><button>See Garbage Tips Now</button></a>
+		<h2 style="display:block; text-align: center;margin-top:14vw;">Where your garbage is going (In Tons)</h2>
 		<canvas id="pi-chart" style="margin-top: 6vw;"></canvas>
 		<script>
 			var ctx = document.getElementById('pi-chart').getContext('2d');
