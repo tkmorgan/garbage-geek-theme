@@ -168,7 +168,7 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 			$commodity_recycling_centers["drop-off-total-${slug}"] = get_drop_off_center_total($commodity_recycling_centers, $slug);
 			$commodity_recycling_centers["total-commodity-recycling-${slug}"] = get_total_commodity_recycling($commodity_recycling_centers, $slug);
 			$commodity_recycling_centers['grand-total-in-pounds'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
-			$commodity_recycling_centers['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"] * 2000;
+			$commodity_recycling_centers['grand-total-in-tons'] += $commodity_recycling_centers["total-commodity-recycling-${slug}"];
 		}
 
 
@@ -260,16 +260,6 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 
 
 
-
-
-
-
-
-
-
-
-
-
 		// group commodity recycling centers by type
 		$commodity_recycling_centers['data-grouped-by-type'] = [];
 		foreach( $commodity_recycling_centers['centers'] as $center ) {
@@ -281,6 +271,49 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		}
 
 		unset($commodity_recycling_centers['centers']);
+
+		$total_wastestream = [];
+
+		$cr = $commodity_recycling_centers['grand-total-in-tons'];
+		$swmfr = $swmfs['recycled']['total-tons'];
+		$mr = $mulch['total'];
+		$diverted = $landfills['diverted']['total-tons'] + $swmfs['diverted']['total-tons'];
+		$garbage = $landfills['garbage']['total-tons'];
+		$total_waste = $cr + $swmfr + $mr + $diverted + $garbage;
+
+		function asPercent( $numerator, $denominator ) {
+			$fraction = (float)$numerator/$denominator;
+			return round((float)$fraction * 100 ) . '%';
+		}
+		$total_wastestream['breakdown']['commodity-recycled'] = [
+			'total' => $cr,
+			'percent' => asPercent( $cr, $total_waste ) 
+		];
+
+		$total_wastestream['breakdown']['swmf-recycled'] = [
+			'total' => $swmfr,
+			'percent' => asPercent( $swmfr, $total_waste )
+		];
+
+		$total_wastestream['breakdown']['mulch-recycled'] = [
+			'total' => $mr,
+			'percent' => asPercent( $mr, $total_waste )
+		];
+
+		$total_wastestream['breakdown']['diverted'] = [
+			'total' => $diverted,
+			'percent' => asPercent( $diverted, $total_waste )
+		];
+
+		$total_wastestream['breakdown']['garbage'] = [
+			'total' => $garbage,
+			'percent' => asPercent( $garbage, $total_waste )
+		];
+
+		$total_wastestream['total'] = [
+			'total' => $total,
+			'percent' => asPercent( $total, $total_waste )
+		];
 
 		echo "<pre>Commodity Recycline Centers
 ========================================";
@@ -301,6 +334,12 @@ function get_total_commodity_recycling( $commodity_recycling_centers, $recyclabl
 		echo "<pre>Mulch
 ========================================";
 		print_r( $mulch );
+		echo "</pre>";
+
+		
+		echo "<pre>Total Wastestream
+========================================";
+		print_r( $total_wastestream );
 		echo "</pre>";
 ?>
 		</main><!-- #main -->
