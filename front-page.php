@@ -263,8 +263,8 @@ $total_wastestream['breakdown']['garbage'] = [
 ];
 
 $total_wastestream['total'] = [
-	'total' => $total,
-	'percent' => asPercent( $total, $total_waste )
+	'total' => $total_waste,
+	'percent' => asPercent( $total_waste, $total_waste )
 ];
 
 echo "<pre>Commodity Recycline Centers
